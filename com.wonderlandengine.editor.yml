@@ -1,6 +1,6 @@
 app-id: com.wonderlandengine.editor
 runtime: org.freedesktop.Platform
-runtime-version: '23.08'
+runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 command: WonderlandEditor
 finish-args:
@@ -15,8 +15,9 @@ finish-args:
   - --filesystem=host
   # For desktop notifications
   - --talk-name=org.freedesktop.Notifications
-modules:
 
+  - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64
+modules:
   - name: glfw
     buildsystem: cmake-ninja
     build-options:
@@ -35,11 +36,11 @@ modules:
     build-options:
       no-debuginfo: true
     build-commands:
-      - mkdir ${FLATPAK_DEST}/bin ${FLATPAK_DEST}/share
+      - mkdir -p ${FLATPAK_DEST}/bin ${FLATPAK_DEST}/share ${FLATPAK_DEST}/lib
       - mv bin/* ${FLATPAK_DEST}/bin
       - mv lib/* ${FLATPAK_DEST}/lib
       - mv share/* ${FLATPAK_DEST}/share
     sources:
       - type: archive
-        url: https://downloads.wonderlandengine.com/1.2.3/WonderlandEngine-1.2.3-Flatpak.tar.gz
-        sha512: 7dcb32f363e28b2d63e198f7716ac465752e640bd959c3a5769d3a6e886f42296245502b2131102bf40995064bc2cbbb35d0e8cb01052d095a2b2b3cf2bf35ec
+        url: https://downloads.wonderlandengine.com/1.2.4/WonderlandEngine-1.2.4-Flatpak.tar.gz
+        sha512: 168c4111b681a6a01fc127a8abf186d768abaa5cda4d66642a9b6737d3b715ffb0d5acab2c0969cefe20a73eace90c33a1c6f14da7ec6f8106ba1f8b4a2b6f72
