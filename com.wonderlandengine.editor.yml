@@ -17,6 +17,7 @@ finish-args:
   - --talk-name=org.freedesktop.Notifications
 
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64
+  - --env=OPENSSL_CONF=/app/etc/ssl/openssl.cnf
 modules:
   - name: glfw
     buildsystem: cmake-ninja
