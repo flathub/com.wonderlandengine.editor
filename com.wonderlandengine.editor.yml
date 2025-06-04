@@ -43,6 +43,6 @@ modules:
       - mv share/* ${FLATPAK_DEST}/share
     sources:
       - type: archive
-        url: https://downloads.wonderlandengine.com/1.4.2/WonderlandEngine-1.4.2-Flatpak.tar.gz
-        sha512: 2abb79015b0bd5ddb76b882c7c2b5f4b8208791cf934dc25f94ae169521923eb09a848392be299f74f87e1f8d8ff6d8892d1517cbad96f6abe0d61c0a503d64b
+        url: https://downloads.wonderlandengine.com/1.4.3/WonderlandEngine-1.4.3-Flatpak.tar.gz
+        sha512: 053889e2ded6def690413f6e20d3d0720299d4eda261a13c4f85c2f8209b6a78635b0cc4bac66a66b708d741167add7de7622f248516580888ef3437347bfa58
         strip-components: 0
