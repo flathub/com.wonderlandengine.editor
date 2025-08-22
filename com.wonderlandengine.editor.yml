@@ -15,9 +15,10 @@ finish-args:
   - --filesystem=host
   # For desktop notifications
   - --talk-name=org.freedesktop.Notifications
+  # Necessary for crash reporting with sentry-native, which requires the ptrace system call
+  - --allow=devel
 
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64
-  - --env=OPENSSL_CONF=/app/etc/ssl/openssl.cnf
 modules:
   - name: glfw
     buildsystem: cmake-ninja
@@ -43,6 +44,6 @@ modules:
       - mv share/* ${FLATPAK_DEST}/share
     sources:
       - type: archive
-        url: https://downloads.wonderlandengine.com/1.4.5/WonderlandEngine-1.4.5-Flatpak.tar.gz
-        sha512: ff71c705b3b09cc694d21194118bac616239a541e19399a687838f3bcff1e09c7aac72f88f7a486d59556d3ab9846d710b706846e0585820218a7e460f8097f6
+        url: https://downloads.wonderlandengine.com/1.4.6/WonderlandEngine-1.4.6-Flatpak.tar.gz
+        sha512: dac72a8e1b44d4763fe29a868eec1d3c19ab553bb116861a9db17bedadf33ad60a089a75e6e91460891dea7ed78aa9f3e4ad6cd76a23e17b48edc6502e1b7329
         strip-components: 0
