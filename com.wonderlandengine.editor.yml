@@ -19,6 +19,7 @@ finish-args:
   - --allow=devel
 
   - --env=LD_LIBRARY_PATH=/app/lib:/app/lib64
+  - --env=OPENSSL_CONF=/app/etc/ssl/openssl.cnf
 modules:
   - name: glfw
     buildsystem: cmake-ninja
@@ -44,6 +45,6 @@ modules:
       - mv share/* ${FLATPAK_DEST}/share
     sources:
       - type: archive
-        url: https://downloads.wonderlandengine.com/1.4.6/WonderlandEngine-1.4.6-Flatpak.tar.gz
-        sha512: dac72a8e1b44d4763fe29a868eec1d3c19ab553bb116861a9db17bedadf33ad60a089a75e6e91460891dea7ed78aa9f3e4ad6cd76a23e17b48edc6502e1b7329
+        url: https://downloads.wonderlandengine.com/1.4.7/WonderlandEngine-1.4.7-Flatpak.tar.gz
+        sha512: e18c13357ec633c9b0a695db2dabf4b697a3faf43210aed63c061fc549e7c264e4fbde28672a4dfe3920717308860d0c6b194c2ac454875f6957d942304970d8
         strip-components: 0
