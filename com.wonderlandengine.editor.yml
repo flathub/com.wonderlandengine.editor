@@ -39,18 +39,23 @@ modules:
     build-options:
       no-debuginfo: true
     build-commands:
-      - mkdir -p ${FLATPAK_DEST}/bin ${FLATPAK_DEST}/share ${FLATPAK_DEST}/lib
+      # ubuntu-arm64 tarballs ship engine libs under lib64/ (Corrade's
+      # lib-suffix detection); ubuntu x86_64 ships them under lib/.
+      # Move whichever exists into the matching /app/ prefix — both are
+      # already covered by LD_LIBRARY_PATH below.
+      - mkdir -p ${FLATPAK_DEST}/bin ${FLATPAK_DEST}/share ${FLATPAK_DEST}/lib ${FLATPAK_DEST}/lib64
       - mv bin/* ${FLATPAK_DEST}/bin
-      - mv lib/* ${FLATPAK_DEST}/lib
+      - if [ -d lib ]; then mv lib/* ${FLATPAK_DEST}/lib; fi
+      - if [ -d lib64 ]; then mv lib64/* ${FLATPAK_DEST}/lib64; fi
       - mv share/* ${FLATPAK_DEST}/share
     sources:
       - type: archive
         only-arches: [x86_64]
         url: https://downloads.wonderlandengine.com/1.6.1/WonderlandEngine-1.6.1-Flatpak-x86_64.tar.gz
-        sha512: fa78a5dd36bbdf187bb92f06deac20df1761459709f27f6e4aba3b85d3e546cbd8bcd2defee9629706f73f89e21fc9855d24b740bbf3448772cb79efe3e7fd22
+        sha512: fe51f624abd63b23490df1665ec79257abede436bb6aded9a89cb4b74780634a02a55c3b7fe9bd2d24b4195d643a04e681f1e96a29831f90f0d77155c7af933d
         strip-components: 0
       - type: archive
         only-arches: [aarch64]
         url: https://downloads.wonderlandengine.com/1.6.1/WonderlandEngine-1.6.1-Flatpak-aarch64.tar.gz
-        sha512: 967db4bac53d3806f2eedee08122599630e22c51672c7a8afcdf61e2337153f534d685bddefdfe0acc068ec4713047d7cb66c4ef268ce935ca0e423034fe5506
+        sha512: 386b2b03ed1361f33b8becd511b7ba3ac05aa791c2ba6f518a870995672c9f8cac6a76e1870edf61bec51d5b10b576444d06daa3008665c12f500742c6483082
         strip-components: 0
