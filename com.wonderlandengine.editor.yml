@@ -3,6 +3,8 @@ runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 command: WonderlandEditor
+tags: 
+  - proprietary
 finish-args:
   # X11 + XShm access
   - --share=ipc
