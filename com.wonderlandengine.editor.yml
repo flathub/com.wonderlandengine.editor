@@ -1,6 +1,6 @@
 app-id: com.wonderlandengine.editor
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: WonderlandEditor
 tags: 
@@ -50,6 +50,10 @@ modules:
       - if [ -d lib ]; then mv lib/* ${FLATPAK_DEST}/lib; fi
       - if [ -d lib64 ]; then mv lib64/* ${FLATPAK_DEST}/lib64; fi
       - mv share/* ${FLATPAK_DEST}/share
+      # Drop the tarball's libssl/libcrypto so the freedesktop runtime supplies
+      # them. OpenSSL 3.x ABI is stable, so deps linked against 3.0.x resolve
+      # against the runtime's 3.5.x cleanly.
+      - rm -f ${FLATPAK_DEST}/lib/libssl.so* ${FLATPAK_DEST}/lib/libcrypto.so* ${FLATPAK_DEST}/lib64/libssl.so* ${FLATPAK_DEST}/lib64/libcrypto.so*
     sources:
       - type: archive
         only-arches: [x86_64]
