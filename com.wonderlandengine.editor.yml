@@ -61,3 +61,20 @@ modules:
         url: https://downloads.wonderlandengine.com/1.6.1/WonderlandEngine-1.6.1-Flatpak-aarch64.tar.gz
         sha512: 386b2b03ed1361f33b8becd511b7ba3ac05aa791c2ba6f518a870995672c9f8cac6a76e1870edf61bec51d5b10b576444d06daa3008665c12f500742c6483082
         strip-components: 0
+
+  - name: openssl
+    buildsystem: simple
+    build-options:
+      no-debuginfo: true
+    build-commands:
+      - ./Configure --prefix=${FLATPAK_DEST} --libdir=lib64 --openssldir=${FLATPAK_DEST}/etc/ssl shared no-tests no-docs no-apps
+      - make -j${FLATPAK_BUILDER_N_JOBS:-$(nproc)}
+      - make install_sw install_ssldirs
+    cleanup:
+      - /include
+      - /lib64/pkgconfig
+      - /lib64/*.a
+    sources:
+      - type: archive
+        url: https://github.com/openssl/openssl/releases/download/openssl-3.5.6/openssl-3.5.6.tar.gz
+        sha256: deae7c80cba99c4b4f940ecadb3c3338b13cb77418409238e57d7f31f2a3b736
