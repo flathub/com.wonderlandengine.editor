@@ -50,6 +50,10 @@ modules:
       - if [ -d lib ]; then mv lib/* ${FLATPAK_DEST}/lib; fi
       - if [ -d lib64 ]; then mv lib64/* ${FLATPAK_DEST}/lib64; fi
       - mv share/* ${FLATPAK_DEST}/share
+      # Drop the tarball's libssl/libcrypto so the freedesktop runtime supplies
+      # them. OpenSSL 3.x ABI is stable, so deps linked against 3.0.x resolve
+      # against the runtime's 3.5.x cleanly.
+      - rm -f ${FLATPAK_DEST}/lib/libssl.so* ${FLATPAK_DEST}/lib/libcrypto.so* ${FLATPAK_DEST}/lib64/libssl.so* ${FLATPAK_DEST}/lib64/libcrypto.so*
     sources:
       - type: archive
         only-arches: [x86_64]
@@ -61,25 +65,3 @@ modules:
         url: https://downloads.wonderlandengine.com/1.6.1/WonderlandEngine-1.6.1-Flatpak-aarch64.tar.gz
         sha512: 386b2b03ed1361f33b8becd511b7ba3ac05aa791c2ba6f518a870995672c9f8cac6a76e1870edf61bec51d5b10b576444d06daa3008665c12f500742c6483082
         strip-components: 0
-
-  - name: openssl
-    buildsystem: simple
-    build-options:
-      no-debuginfo: true
-    build-commands:
-      - ./Configure --prefix=${FLATPAK_DEST} --libdir=lib64 --openssldir=${FLATPAK_DEST}/etc/ssl shared no-tests no-docs no-apps
-      - make -j${FLATPAK_BUILDER_N_JOBS:-$(nproc)}
-      - make install_sw install_ssldirs
-      # x86_64 tarball drops the older libssl/libcrypto in /app/lib; point
-      # those names at the freshly installed /app/lib64 ones so the loader
-      # finds the OPENSSL_3.2.0-bearing build via either search path.
-      - ln -sf ../lib64/libssl.so.3    ${FLATPAK_DEST}/lib/libssl.so.3
-      - ln -sf ../lib64/libcrypto.so.3 ${FLATPAK_DEST}/lib/libcrypto.so.3
-    cleanup:
-      - /include
-      - /lib64/pkgconfig
-      - /lib64/*.a
-    sources:
-      - type: archive
-        url: https://github.com/openssl/openssl/releases/download/openssl-3.5.6/openssl-3.5.6.tar.gz
-        sha256: deae7c80cba99c4b4f940ecadb3c3338b13cb77418409238e57d7f31f2a3b736
