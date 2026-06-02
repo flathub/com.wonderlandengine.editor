@@ -70,6 +70,11 @@ modules:
       - ./Configure --prefix=${FLATPAK_DEST} --libdir=lib64 --openssldir=${FLATPAK_DEST}/etc/ssl shared no-tests no-docs no-apps
       - make -j${FLATPAK_BUILDER_N_JOBS:-$(nproc)}
       - make install_sw install_ssldirs
+      # x86_64 tarball drops the older libssl/libcrypto in /app/lib; point
+      # those names at the freshly installed /app/lib64 ones so the loader
+      # finds the OPENSSL_3.2.0-bearing build via either search path.
+      - ln -sf ../lib64/libssl.so.3    ${FLATPAK_DEST}/lib/libssl.so.3
+      - ln -sf ../lib64/libcrypto.so.3 ${FLATPAK_DEST}/lib/libcrypto.so.3
     cleanup:
       - /include
       - /lib64/pkgconfig
