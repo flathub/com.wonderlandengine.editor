@@ -63,5 +63,5 @@ modules:
       - type: archive
         only-arches: [aarch64]
         url: https://downloads.wonderlandengine.com/1.6.1/WonderlandEngine-1.6.1-Flatpak-aarch64.tar.gz
-        sha512: 386b2b03ed1361f33b8becd511b7ba3ac05aa791c2ba6f518a870995672c9f8cac6a76e1870edf61bec51d5b10b576444d06daa3008665c12f500742c6483082
+        sha512: 5693607dd2e34294d5c3f55f4ac563780f40842d412a7aecccf084ffe5f49f1492701e45349568cf96ac9025697a9312227d317f9862dfd91ccfb20e875a7ad2
         strip-components: 0
